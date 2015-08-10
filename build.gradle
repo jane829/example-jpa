@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.2.5.RELEASE'
+    compile 'org.springframework:spring-context:4.2.0.RELEASE'
+
+    compile 'org.mockito:mockito-core:2.0.31-beta'
+    compile 'com.h2database:h2:1.4.187'
+    compile 'org.springframework:spring-jdbc:4.2.0.RELEASE'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.0'
+    compile 'com.jayway.jsonpath:json-path:2.0.0'
+    compile 'org.hsqldb:hsqldb-j5:2.2.4'
+    compile 'com.google.guava:guava:18.0'
+
+    compile 'javax.inject:javax.inject:1'
+
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework:spring-test:4.2.0.RELEASE'
+}
+
+
