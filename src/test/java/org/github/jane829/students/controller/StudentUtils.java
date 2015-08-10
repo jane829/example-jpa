@@ -1,3 +1,5 @@
+package org.github.jane829.students.controller;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.github.jane829.students.domain.Student;

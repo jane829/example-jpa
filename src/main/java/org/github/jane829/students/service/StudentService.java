@@ -40,7 +40,7 @@ public class StudentService
         return studentRepository.deleteByNumber(number);
     }
 
-    public Student update(String student)
+    public Student update(Student student)
     {
         Student stu = null;
         return studentRepository.save(stu);

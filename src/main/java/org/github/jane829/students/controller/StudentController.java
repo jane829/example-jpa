@@ -32,13 +32,13 @@ public class StudentController
     }
 
     @RequestMapping(value = "/{number}", method = RequestMethod.DELETE)
-    public Student delete(@PathVariable("number") String number)
+    public void delete(@PathVariable("number") String number)
     {
-        return studentService.delete(number);
+        studentService.delete(number);
     }
 
-    @RequestMapping(value = "/{student}", method = RequestMethod.PUT)
-    public Student update(@PathVariable("student") String student)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Student update(@PathVariable("id") String id, @RequestBody Student student)
     {
         return studentService.update(student);
     }
