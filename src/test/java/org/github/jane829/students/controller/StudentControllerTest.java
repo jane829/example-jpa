@@ -19,6 +19,8 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -110,6 +112,8 @@ public class StudentControllerTest
         // when
         mockMvc.perform(delete("/students/{number}", student.getNumber()).contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
+
+        verify(studentService).delete(student.getNumber());
     }
 
     @Test
@@ -118,7 +122,7 @@ public class StudentControllerTest
         // given
         Student updatedStudent = StudentUtils.createStudent();
         updatedStudent.setFirst_name("Lin");
-        when(studentService.update(any(Student.class))).thenReturn(updatedStudent);
+        when(studentService.update(eq("1"), any(Student.class))).thenReturn(updatedStudent);
 
         // when
         mockMvc.perform(put("/students/1")

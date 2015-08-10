@@ -25,22 +25,22 @@ public class StudentController
         return studentService.save(student);
     }
 
-    @RequestMapping(value = "/{number}", method = RequestMethod.GET)
-    public Student query(@PathVariable("number") String number)
+    @RequestMapping(value = "/{student_number}", method = RequestMethod.GET)
+    public Student query(@PathVariable("student_number") String number)
     {
         return studentService.query(number).get(0);
     }
 
-    @RequestMapping(value = "/{number}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("number") String number)
+    @RequestMapping(value = "/{student_number}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("student_number") String number)
     {
         studentService.delete(number);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Student update(@PathVariable("id") String id, @RequestBody Student student)
+    @RequestMapping(value = "/{student_number}", method = RequestMethod.PUT)
+    public Student update(@PathVariable("student_number") String studentNumber, @RequestBody Student student)
     {
-        return studentService.update(student);
+        return studentService.update(studentNumber, student);
     }
 
 }
