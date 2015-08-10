@@ -18,7 +18,7 @@ public class StudentService
         this.studentRepository = studentRepository;
     }
 
-    public Student save(Student student)
+    public Student save(Student student) throws Exception
     {
         Student stu = studentRepository.findByNumber(student.getNumber());
 

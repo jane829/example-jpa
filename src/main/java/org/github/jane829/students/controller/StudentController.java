@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
-@RequestMapping(value = "/student")
+@RequestMapping(value = "/students")
 public class StudentController
 {
     private StudentService studentService;
@@ -20,34 +19,28 @@ public class StudentController
         this.studentService = studentService;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Student save(@RequestBody @Valid Student student)
+    @RequestMapping(method = RequestMethod.POST)
+    public Student save(@RequestBody @Valid Student student) throws Exception
     {
         return studentService.save(student);
     }
 
-    @RequestMapping(value = "/query/{number}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{number}", method = RequestMethod.GET)
     public Student query(@PathVariable("number") String number)
     {
         return studentService.query(number).get(0);
     }
 
-    @RequestMapping(value = "/delete/{number}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{number}", method = RequestMethod.DELETE)
     public Student delete(@PathVariable("number") String number)
     {
         return studentService.delete(number);
     }
 
-    @RequestMapping(value = "/update/{student}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{student}", method = RequestMethod.PUT)
     public Student update(@PathVariable("student") String student)
     {
         return studentService.update(student);
     }
 
-    @RequestMapping(value = "/student/queryByFirstName/{firstName}")
-    public List<Student> queryWithSameFirstName(@PathVariable("firstName") String firstName)
-    {
-        List<Student> students = studentService.query(firstName);
-        return students;
-    }
 }
