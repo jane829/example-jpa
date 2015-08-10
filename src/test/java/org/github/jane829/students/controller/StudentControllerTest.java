@@ -106,11 +106,8 @@ public class StudentControllerTest
     @Test
     public void should_return_null_after_deleted() throws Exception
     {
-        // given
-        when(studentService.delete(student.getNumber())).thenReturn(null);
-
         // when
-        mockMvc.perform(delete("/students/{number}", student.getNumber()).contentType(StudentUtils.APPLICATION_JSON_UTF8))
+        mockMvc.perform(delete("/students/{student_number}",student.getNumber()).contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         verify(studentService).delete(student.getNumber());
@@ -122,10 +119,10 @@ public class StudentControllerTest
         // given
         Student updatedStudent = StudentUtils.createStudent();
         updatedStudent.setFirst_name("Lin");
-        when(studentService.update(eq("1"), any(Student.class))).thenReturn(updatedStudent);
+        when(studentService.update(any(Student.class))).thenReturn(updatedStudent);
 
         // when
-        mockMvc.perform(put("/students/1")
+        mockMvc.perform(put("/students/1234567")
                 .content(new ObjectMapper().writeValueAsString(student))
                 .contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())

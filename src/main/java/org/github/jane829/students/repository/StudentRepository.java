@@ -4,10 +4,12 @@ import org.github.jane829.students.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public abstract class StudentRepository implements JpaRepository<Student, Integer>
 {
-    public abstract Student findByNumber(String number);
+    public abstract List<Student> findByNumber(String number);
 
-    public abstract Student deleteByNumber(String number);
+    public abstract void deleteByNumber(String number);
 }

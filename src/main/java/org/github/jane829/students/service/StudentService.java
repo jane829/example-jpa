@@ -1,6 +1,7 @@
 package org.github.jane829.students.service;
 
 import org.github.jane829.students.domain.Student;
+import org.github.jane829.students.exceptions.SameStudentException;
 import org.github.jane829.students.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,29 +21,33 @@ public class StudentService
 
     public Student save(Student student) throws Exception
     {
-        Student stu = studentRepository.findByNumber(student.getNumber());
+                List<Student> students = studentRepository.findByNumber(student.getNumber());
 
-        if (stu != null) {
-            System.out.println("Existed!");
-            student.setNumber("-1");
-            return student;
+
+        if (students != null && students.size()!=0) {
+            throw new SameStudentException();
         }
         return studentRepository.save(student);
     }
 
     public List<Student> query(String number)
     {
-        return null;
+        return studentRepository.findByNumber(number);
     }
 
-    public Student delete(String number)
+    public void delete(String number)
     {
-        return studentRepository.deleteByNumber(number);
+        studentRepository.deleteByNumber(number);
     }
 
-    public Student update(String studentNumber, Student student)
+    public Student update(Student student)
     {
-        Student stu = null;
-        return studentRepository.save(stu);
+        Student savedStudent = studentRepository.findByNumber(student.getNumber()).get(0);
+
+        savedStudent.setGender(student.getGender());
+        savedStudent.setFirst_name(student.getFirst_name());
+        savedStudent.setLast_name(student.getLast_name());
+
+        return studentRepository.save(savedStudent);
     }
 }

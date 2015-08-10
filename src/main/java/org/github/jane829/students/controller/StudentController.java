@@ -37,10 +37,10 @@ public class StudentController
         studentService.delete(number);
     }
 
-    @RequestMapping(value = "/{student_number}", method = RequestMethod.PUT)
-    public Student update(@PathVariable("student_number") String studentNumber, @RequestBody Student student)
+    @RequestMapping(method = RequestMethod.PUT)
+    public Student update(@RequestBody Student student)
     {
-        return studentService.update(studentNumber, student);
+        return studentService.update(student);
     }
 
 }
