@@ -31,15 +31,13 @@ import static org.hamcrest.core.Is.is;
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest("server.port:0")
 
-public class StudentsIntegrationTest
+public class StudentsRestAssuredIntegrationTest
 {
     private static final String NUMBER_FIELD = "number";
-    private static final String ITEMS_STUDENTS = "/students";
-    private static final String SAVE_STUDENT = "/students";
     private static final String FIRST_NAME = "first_name";
     private static final String LAST_NAME = "last_name";
-    private static final String ITEM_UPDATE = "/students";
-    private static final String ITEM_DELETE = "/students";
+    private static final String DOMAIN = "/students";
+
     @Autowired
     private StudentRepository studentRepository;
 
@@ -48,12 +46,20 @@ public class StudentsIntegrationTest
     private MockMvc mockMvc;
     @Value("${local.server.port}")
     private int serverPort;
+    private Student exampleStudentA;
+    private Student exampleStudentB;
 
     @Before
     public void setUp() throws Exception
     {
         RestAssured.port = serverPort;
+
         studentRepository.deleteAll();
+        exampleStudentA = StudentUtils.createExampleStudentA();
+        exampleStudentB = StudentUtils.createExampleStudentB();
+
+        studentRepository.save(exampleStudentA);
+        studentRepository.save(exampleStudentB);
     }
 
 
@@ -64,7 +70,7 @@ public class StudentsIntegrationTest
                 .body(StudentUtils.createSecondStudent())
                 .contentType(ContentType.JSON)
                 .when()
-                .post(SAVE_STUDENT)
+                .post(DOMAIN)
                 .then().statusCode(HttpStatus.SC_OK)
 
                 .body("first_name", is("mei"))
@@ -74,19 +80,12 @@ public class StudentsIntegrationTest
     @Test
     public void should_not_save_student_when_already_existed()
     {
-        given()
-                .body(StudentUtils.createSecondStudent())
-                .contentType(ContentType.JSON)
-                .when()
-                .post(SAVE_STUDENT)
-                .then().
-                statusCode(HttpStatus.SC_OK);
 
         given()
-                .body(StudentUtils.createSecondStudent())
+                .body(exampleStudentA)
                 .contentType(ContentType.JSON)
                 .when()
-                .post(SAVE_STUDENT)
+                .post(DOMAIN)
                 .then().
                 statusCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
@@ -94,35 +93,19 @@ public class StudentsIntegrationTest
     @Test
     public void should_return_students_when_get() throws Exception
     {
-        given()
-                .body(StudentUtils.createStudent())
-                .contentType(ContentType.JSON)
-                .when()
-                .post(SAVE_STUDENT)
-                .then().
-                statusCode(HttpStatus.SC_OK);
-        given()
-                .body(StudentUtils.createSecondStudent())
-                .contentType(ContentType.JSON)
-                .when()
-                .post(SAVE_STUDENT)
-                .then().
-                statusCode(HttpStatus.SC_OK);
-
-
-        when().get(ITEMS_STUDENTS + "/1234567")
+        when().get(DOMAIN + "/" + exampleStudentA.getNumber())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body(FIRST_NAME, is("mei"))
-                .body(NUMBER_FIELD, is("1234567"));
+                .body(FIRST_NAME, is(exampleStudentA.getFirst_name()))
+                .body(NUMBER_FIELD, is(exampleStudentA.getNumber()));
 
 
-        when().get(ITEMS_STUDENTS)
+        when().get(DOMAIN)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body(FIRST_NAME, hasItems("mei", "mei"))
-                .body(LAST_NAME, hasItems("lan", "han"))
-                .body(NUMBER_FIELD, hasItems("1234567", "1234568"));
+                .body(FIRST_NAME, hasItems(exampleStudentA.getFirst_name(), exampleStudentB.getFirst_name()))
+                .body(LAST_NAME, hasItems(exampleStudentA.getLast_name(), exampleStudentB.getLast_name()))
+                .body(NUMBER_FIELD, hasItems(exampleStudentA.getNumber(), exampleStudentB.getNumber()));
 
     }
 
@@ -130,22 +113,12 @@ public class StudentsIntegrationTest
     @Test
     public void should_update__student_when_update()
     {
+        exampleStudentA.setFirst_name("haha");
         given()
-                .body(StudentUtils.createSecondStudent())
+                .body(exampleStudentA)
                 .contentType(ContentType.JSON)
                 .when()
-                .post(SAVE_STUDENT)
-                .then().
-                statusCode(HttpStatus.SC_OK);
-
-
-        Student updateStudent = StudentUtils.createSecondStudent();
-        updateStudent.setFirst_name("haha");
-        given()
-                .body(updateStudent)
-                .contentType(ContentType.JSON)
-                .when()
-                .put(ITEM_UPDATE)
+                .put(DOMAIN)
                 .then()
                 .body(FIRST_NAME, is("haha"));
     }
@@ -154,16 +127,8 @@ public class StudentsIntegrationTest
     @Test
     public void should_delete_student_when_delete()
     {
-        given()
-                .body(StudentUtils.createStudent())
-                .contentType(ContentType.JSON)
-                .when()
-                .post(SAVE_STUDENT)
-                .then().
-                statusCode(HttpStatus.SC_OK);
-
         when()
-                .delete(ITEM_DELETE + "/1234567")
+                .delete(DOMAIN + "/" + exampleStudentA.getNumber())
                 .then()
                 .statusCode(HttpStatus.SC_OK);
 

@@ -56,4 +56,14 @@ public class StudentUtils
     {
         return new Student("1234568", "mei", "lan", "female");
     }
+
+    public static Student createExampleStudentA()
+    {
+        return new Student("1122335","xiong","da","MALE");
+    }
+
+    public static Student createExampleStudentB()
+    {
+        return new Student("1122334","hong","xiao","FEMALE");
+    }
 }
