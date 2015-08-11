@@ -122,7 +122,7 @@ public class StudentControllerTest
         when(studentService.update(any(Student.class))).thenReturn(updatedStudent);
 
         // when
-        mockMvc.perform(put("/students/1234567")
+        mockMvc.perform(put("/students")
                 .content(new ObjectMapper().writeValueAsString(student))
                 .contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
