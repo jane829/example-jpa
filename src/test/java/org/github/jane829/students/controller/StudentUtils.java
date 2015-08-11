@@ -51,4 +51,9 @@ public class StudentUtils
 
         return students;
     }
+
+    public static Student createSecondStudent()
+    {
+        return new Student("1234568", "mei", "lan", "female");
+    }
 }

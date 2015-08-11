@@ -5,6 +5,7 @@ import org.github.jane829.students.exceptions.SameStudentException;
 import org.github.jane829.students.repository.StudentRepository;
 import org.github.jane829.students.service.StudentService;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,13 +29,13 @@ public class StudentServiceTest
     @InjectMocks
     private StudentService studentService;
 
-    private ExpectedException thrown;
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
-        thrown = ExpectedException.none();
     }
 
     @Test
@@ -41,6 +43,7 @@ public class StudentServiceTest
     {
         // given
         Student student = StudentUtils.createStudent();
+        when(studentRepository.findByNumber(any())).thenReturn(null);
         when(studentRepository.save(student)).thenReturn(student);
 
         // when
@@ -55,9 +58,14 @@ public class StudentServiceTest
     {
         thrown.expect(SameStudentException.class);
 
-        // when
-        studentService.save(StudentUtils.createStudent());
+        // given
+        Student student = StudentUtils.createStudent();
+        List<Student> students = new ArrayList<>();
+        students.add(student);
+        when(studentRepository.findByNumber(any())).thenReturn(students);
 
+        // when
+        studentService.save(student);
     }
 
     @Test

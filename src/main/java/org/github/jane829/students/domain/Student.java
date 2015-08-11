@@ -10,7 +10,7 @@ public class Student
 {
     @Id
     @GeneratedValue
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private int id;
     private String number;
     private String first_name;

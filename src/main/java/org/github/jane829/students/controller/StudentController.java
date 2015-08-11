@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/students")
@@ -29,6 +30,12 @@ public class StudentController
     public Student query(@PathVariable("student_number") String number)
     {
         return studentService.query(number).get(0);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Student> queryAll()
+    {
+        return studentService.queryAll();
     }
 
     @RequestMapping(value = "/{student_number}", method = RequestMethod.DELETE)

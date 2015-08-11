@@ -21,10 +21,10 @@ public class StudentService
 
     public Student save(Student student) throws Exception
     {
-                List<Student> students = studentRepository.findByNumber(student.getNumber());
+        List<Student> students = studentRepository.findByNumber(student.getNumber());
 
 
-        if (students != null && students.size()!=0) {
+        if (students != null && students.size() != 0) {
             throw new SameStudentException();
         }
         return studentRepository.save(student);
@@ -49,5 +49,10 @@ public class StudentService
         savedStudent.setLast_name(student.getLast_name());
 
         return studentRepository.save(savedStudent);
+    }
+
+    public List<Student> queryAll()
+    {
+        return studentRepository.findAll();
     }
 }

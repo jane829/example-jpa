@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public abstract class StudentRepository implements JpaRepository<Student, Integer>
+public interface StudentRepository extends JpaRepository<Student, Integer>
 {
-    public abstract List<Student> findByNumber(String number);
+    List<Student> findByNumber(String number);
 
-    public abstract void deleteByNumber(String number);
+    void deleteByNumber(String number);
 }

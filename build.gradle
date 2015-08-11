@@ -31,10 +31,13 @@ dependencies {
     compile 'com.jayway.jsonpath:json-path:2.0.0'
     compile 'org.hsqldb:hsqldb-j5:2.2.4'
     compile 'com.google.guava:guava:18.0'
+    compile 'com.jayway.restassured:rest-assured:2.5.0'
+
+
 
     compile 'javax.inject:javax.inject:1'
 
-
+    testCompile 'com.github.springtestdbunit:spring-test-dbunit:1.2.1'
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework:spring-test:4.2.0.RELEASE'
 }
