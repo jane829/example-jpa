@@ -45,8 +45,8 @@ public class StudentService
         Student savedStudent = studentRepository.findByNumber(student.getNumber()).get(0);
 
         savedStudent.setGender(student.getGender());
-        savedStudent.setFirst_name(student.getFirst_name());
-        savedStudent.setLast_name(student.getLast_name());
+        savedStudent.setFirstName(student.getFirstName());
+        savedStudent.setLastName(student.getLastName());
 
         return studentRepository.save(savedStudent);
     }

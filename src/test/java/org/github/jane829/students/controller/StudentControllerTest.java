@@ -69,8 +69,8 @@ public class StudentControllerTest
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.number", is("1234567")))
-                .andExpect(jsonPath("$.first_name", is("mei")))
-                .andExpect(jsonPath("$.last_name", is("han")));
+                .andExpect(jsonPath("$.firstName", is("mei")))
+                .andExpect(jsonPath("$.lastName", is("han")));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class StudentControllerTest
         // when
         mockMvc.perform(get("/students/{number}", student.getNumber()).contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.number", is(student.getNumber())))
-                .andExpect(jsonPath("$.first_name", is(student.getFirst_name())))
-                .andExpect(jsonPath("$.last_name", is(student.getLast_name())));
+                .andExpect(jsonPath("$.firstName", is(student.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(student.getLastName())));
 
     }
 
@@ -118,7 +118,7 @@ public class StudentControllerTest
     {
         // given
         Student updatedStudent = StudentUtils.createStudent();
-        updatedStudent.setFirst_name("Lin");
+        updatedStudent.setFirstName("Lin");
         when(studentService.update(any(Student.class))).thenReturn(updatedStudent);
 
         // when
@@ -126,7 +126,7 @@ public class StudentControllerTest
                 .content(new ObjectMapper().writeValueAsString(student))
                 .contentType(StudentUtils.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.first_name", is(updatedStudent.getFirst_name())));
+                .andExpect(jsonPath("$.firstName", is(updatedStudent.getFirstName())));
     }
 
 }

@@ -34,8 +34,8 @@ import static org.hamcrest.core.Is.is;
 public class StudentsRestAssuredIntegrationTest
 {
     private static final String NUMBER_FIELD = "number";
-    private static final String FIRST_NAME = "first_name";
-    private static final String LAST_NAME = "last_name";
+    private static final String FIRST_NAME = "firstName";
+    private static final String LAST_NAME = "lastName";
     private static final String DOMAIN = "/students";
 
     @Autowired
@@ -73,7 +73,7 @@ public class StudentsRestAssuredIntegrationTest
                 .post(DOMAIN)
                 .then().statusCode(HttpStatus.SC_OK)
 
-                .body("first_name", is("mei"))
+                .body("firstName", is("mei"))
                 .body(NUMBER_FIELD, is("1234568"));
     }
 
@@ -96,15 +96,15 @@ public class StudentsRestAssuredIntegrationTest
         when().get(DOMAIN + "/" + exampleStudentA.getNumber())
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body(FIRST_NAME, is(exampleStudentA.getFirst_name()))
+                .body(FIRST_NAME, is(exampleStudentA.getFirstName()))
                 .body(NUMBER_FIELD, is(exampleStudentA.getNumber()));
 
 
         when().get(DOMAIN)
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .body(FIRST_NAME, hasItems(exampleStudentA.getFirst_name(), exampleStudentB.getFirst_name()))
-                .body(LAST_NAME, hasItems(exampleStudentA.getLast_name(), exampleStudentB.getLast_name()))
+                .body(FIRST_NAME, hasItems(exampleStudentA.getFirstName(), exampleStudentB.getFirstName()))
+                .body(LAST_NAME, hasItems(exampleStudentA.getLastName(), exampleStudentB.getLastName()))
                 .body(NUMBER_FIELD, hasItems(exampleStudentA.getNumber(), exampleStudentB.getNumber()));
 
     }
@@ -113,7 +113,7 @@ public class StudentsRestAssuredIntegrationTest
     @Test
     public void should_update__student_when_update()
     {
-        exampleStudentA.setFirst_name("haha");
+        exampleStudentA.setFirstName("haha");
         given()
                 .body(exampleStudentA)
                 .contentType(ContentType.JSON)

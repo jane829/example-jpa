@@ -2,6 +2,9 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
+idea.project {
+    vcs = 'Git'
+}
 
 buildscript {
     repositories {
@@ -32,6 +35,7 @@ dependencies {
     compile 'org.hsqldb:hsqldb-j5:2.2.4'
     compile 'com.google.guava:guava:18.0'
     compile 'com.jayway.restassured:rest-assured:2.5.0'
+//    compile 'mysql:mysql-connector-java:5.1.36'
 
 
 

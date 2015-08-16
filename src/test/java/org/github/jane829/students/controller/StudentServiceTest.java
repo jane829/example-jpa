@@ -93,9 +93,9 @@ public class StudentServiceTest
 
         // then
         assertThat(returnedStudents.size(),is(1));
-        assertThat(returnedStudents.get(0).getFirst_name(),is(student.getFirst_name()));
+        assertThat(returnedStudents.get(0).getFirstName(),is(student.getFirstName()));
         assertThat(returnedStudents.get(0).getGender(),is(student.getGender()));
-        assertThat(returnedStudents.get(0).getLast_name(),is(student.getLast_name()));
+        assertThat(returnedStudents.get(0).getLastName(),is(student.getLastName()));
     }
 
     @Test

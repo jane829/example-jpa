@@ -13,8 +13,8 @@ public class Student
     @Column(name = "id", nullable = false)
     private int id;
     private String number;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String gender;
 
 
@@ -22,11 +22,11 @@ public class Student
     {
     }
 
-    public Student(String number, String first_name, String last_name, String gender)
+    public Student(String number, String firstName, String lastName, String gender)
     {
         this.number = number;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
     }
 
@@ -40,9 +40,9 @@ public class Student
         this.gender = gender;
     }
 
-    public void setLast_name(String last_name)
+    public void setLastName(String lastName)
     {
-        this.last_name = last_name;
+        this.lastName = lastName;
     }
 
     public void setNumber(String number)
@@ -50,9 +50,9 @@ public class Student
         this.number = number;
     }
 
-    public void setFirst_name(String first_name)
+    public void setFirstName(String firstName)
     {
-        this.first_name = first_name;
+        this.firstName = firstName;
     }
 
 
@@ -66,14 +66,14 @@ public class Student
         return number;
     }
 
-    public String getFirst_name()
+    public String getFirstName()
     {
-        return first_name;
+        return firstName;
     }
 
-    public String getLast_name()
+    public String getLastName()
     {
-        return last_name;
+        return lastName;
     }
 
     public String getGender()
